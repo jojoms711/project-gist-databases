@@ -1,5 +1,5 @@
 from .models import Gist
-import sqlite3
+#import sqlite3
 from datetime import datetime
 
 def search_gists(db_connection, **kwargs):
@@ -39,7 +39,7 @@ def search_gists(db_connection, **kwargs):
             
         clause = clause.rstrip(' AND ')
         query += clause   
-        print(query)
+        #print(query)
         cursor = db_connection.execute(query)
         
         results= []

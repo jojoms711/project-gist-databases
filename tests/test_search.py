@@ -1,6 +1,5 @@
 from datetime import datetime
 from gists_database.search import search_gists
-from pprint import pprint
 
 from .fixtures import populated_gists_database as db
 
@@ -67,8 +66,7 @@ def test_search_with_created_date_lte(db):
 
 def test_search_with_multiple_and_params(db):
     d = datetime(2014, 5, 3, 20, 26, 8)
-    gists = search_gists(db, created_at__lte=d,
-                                  github_id='18bdf248a679155f1381')
+    gists = search_gists(db, created_at__lte=d,github_id='18bdf248a679155f1381')
     assert len(gists) == 1
 
     gist = gists[0]
