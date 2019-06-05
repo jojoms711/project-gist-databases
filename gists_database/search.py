@@ -1,12 +1,11 @@
 from .models import Gist
-#import sqlite3
-from datetime import datetime
+import datetime
 
 def search_gists(db_connection, **kwargs):
     query = 'Select * from gists'
     if not kwargs:
         cursor = db_connection.execute(query)
-        return cursor.fetchall()
+        
     else:
         #if there are multiple where clauses
         query += ' where '
@@ -20,7 +19,7 @@ def search_gists(db_connection, **kwargs):
         }
 
         for k, v in kwargs.items(): 
-            if type(v) ==datetime:
+            if type(v) == datetime.datetime:
                 if '__' not in k:
                     operator = '='
                 else:
@@ -32,6 +31,7 @@ def search_gists(db_connection, **kwargs):
                             k = k[:pos]
                 k= str('datetime({})'.format(k))
                 v= str(v) 
+                
             else: #if no datetime comparison
                 operator = '='
             q = "'"
@@ -39,11 +39,10 @@ def search_gists(db_connection, **kwargs):
             
         clause = clause.rstrip(' AND ')
         query += clause   
-        #print(query)
-        cursor = db_connection.execute(query)
         
-        results= []
-        for row in cursor:
-            results.append(Gist(row))
-        return results
+        cursor = db_connection.execute(query)
+    
+    ################    
+    results = [Gist(row) for row in cursor]
+    return results  
      
